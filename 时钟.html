@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>简易数字钟</title>
+    <style>
+        /*
+            基本样式
+        */
+        div,
+        ul,
+        li,
+        p,
+        span {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        ul,
+        li {
+            list-style: none;
+        }
+
+        .clearfix::after {
+            display: block;
+            content: "";
+            clear: both;
+        }
+
+
+        /*
+            框架
+        */
+        .wrap {
+            width: 600px;
+            height: 200px;
+            margin: 50px auto;
+            border:1px solid #000;
+            user-select: none;
+        }
+
+        .wrap p {
+            width: 100%;
+            height: 50px;
+            line-height: 50px;
+            text-align: center;
+            font-size: 30px;
+            color: #000;
+        }
+
+        .wrap p span {
+            color: red;
+        }
+
+        .wrap ul {
+            position: relative;
+        }
+
+        /*
+            四个点
+        */
+        .wrap ul .point {
+            display: block;
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #000;
+        }
+
+        .wrap ul span.p1 {
+            top: 60px;
+            left: 192px;
+        }
+
+        .wrap ul span.p2 {
+            top: 90px;
+            left: 192px;
+        }
+
+        .wrap ul span.p3 {
+            top: 60px;
+            left: 398px;
+        }
+
+        .wrap ul span.p4 {
+            top: 90px;
+            left: 398px;
+        }
+
+
+        /*
+            时秒分布局
+        */
+        .wrap ul li {
+            float: left;
+            width: 190px;
+            height: 150px;
+        }
+
+        .wrap ul li:not(.hours) {
+            margin-left: 15px;
+        }
+
+        .wrap ul li span {
+            float: left;
+            width: 70px;
+            height: 120px;
+            line-height: 120px;
+            background-image: linear-gradient(to bottom, #333 50%, #000);
+            font-size: 70px;
+            color: #FFF;
+            text-align: center;
+            margin-left: 16px;
+            margin-top: 15px;
+        }
+        .clock{
+            position:relative;
+            width:200px;
+            height:200px;
+            margin:20px auto;
+            border-radius: 50%;
+            background-color: pink;
+        }
+        .clock .hour{
+            position: absolute;
+            top:50%;
+            left:50%;
+            width:60px;
+            height:8px;
+            border-radius:2px 2px 3px 3px/ 3px 3px 2px 2px;
+            background-color: #000;
+            transform: translate(0,-50%) rotate(0deg) ;
+            transform-origin: left;
+        }
+        .clock .min{
+            position: absolute;
+            top:50%;
+            left:50%;
+            width:70px;
+            height:5px;
+            border-radius:2px 2px 3px 3px/ 3px 3px 2px 2px;
+            background-color: #f00;
+            transform: translate(0,-50%) rotate(30deg) ;
+            transform: translate(0,-50%) rotate(0deg) ;
+            transform-origin: left;
+        }
+        .clock .sec{
+            position: absolute;
+            top:50%;
+            left:50%;
+            width:80px;
+            height:3px;
+            border-radius:2px 2px 3px 3px/ 3px 3px 2px 2px;
+            background-color: yellow;
+            transform: translate(0,-50%) rotate(30deg) ;
+            transform-origin: left;
+            
+        }
+        .clock .table {
+            position: relative;
+        }
+        .clock .table span{
+            display: block;
+            position: absolute;
+            width:18px;
+            height:18px;
+            line-height: 18px;
+            text-align: center;
+        }
+        .clock .table .twelve{
+            top:0px;
+            left:91px;
+        }
+        .clock .table .eleven{
+            top:13px;
+            left:43px;
+        }
+        .clock .table .one{
+            top:13px;
+            left:140px;
+        }
+        .clock .table .two{
+            top:44px;
+            left:169px;
+        }
+        .clock .table .three{
+            top:90px;
+            left:183px;
+        }
+        .clock .table .four{
+            top:141px;
+            left:169px;
+        }
+        .clock .table .five{
+            top:170px;
+            left:140px;
+        }
+        .clock .table .six{
+            top:182px;
+            left:91px;
+        }
+        .clock .table .seven{
+            top:170px;
+            left:43px;
+        }
+        .clock .table .eight{
+            top:141px;
+            left:10px;
+        }
+        .clock .table .nine{
+            top:90px;
+            left:0px;
+        }
+        .clock .table .ten{
+            top:45px;
+            left:14px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <p class="today">今天是<span class="year"></span>年<span class="month"></span>月<span class="day"></span>日</p>
+        <ul class="clearfix">
+            <li class="hours">
+                <span></span><span></span>
+            </li>
+            <li class="mins">
+                <span></span><span></span>
+            </li>
+            <li class="sec">
+                <span></span><span></span>
+            </li>
+            <span class="point p1"></span>
+            <span class="point p2"></span>
+            <span class="point p3"></span>
+            <span class="point p4"></span>
+        </ul>
+    </div>
+    <div class="clock">
+        <span class="hour"></span>
+        <span class="min"></span>
+        <span class="sec"></span>
+        <div class="table">
+            <!--直接给定位吧-->
+            <span class="twelve">12</span>
+            <span class="one">1</span>
+            <span class="two">2</span>
+            <span class="three">3</span>
+            <span class="four">4</span>
+            <span class="five">5</span>
+            <span class="six">6</span>
+            <span class="seven">7</span>
+            <span class="eight">8</span>
+            <span class="nine">9</span>
+            <span class="ten">10</span>
+            <span class="eleven">11</span>
+        </div>
+    </div>
+
+    <script>
+        /*
+            设计思路：通过获取当前时间，将当前时间拆分成年月日时秒分，然后分别添加到html中
+        */
+
+        //获取时间
+
+        //添加到html文档中
+    {
+        let aSpan = document.querySelectorAll(".wrap span"),
+            oSec = document.querySelector(".clock .sec"),
+            oMin =document.querySelector(".clock .min"),
+            oHour = document.querySelector(".clock .hour");
+        function nowTime() {
+            let now = new Date();
+            let rec;
+            //获取年月日，时秒分
+            let ymd = [
+                now.getFullYear(),
+                1+now.getMonth(),
+                now.getDate(),
+                now.getHours(),
+                now.getMinutes(),
+                now.getSeconds()
+            ];  
+            aSpan[0].innerHTML = ymd[0];
+            aSpan[1].innerHTML = ymd[1];
+            aSpan[2].innerHTML = ymd[2];
+            
+            //先做数据处理，再带入
+            rec = Demolition(ymd[3]);
+            aSpan[3].innerHTML = rec[0];
+            aSpan[4].innerHTML = rec[1];
+            rec = Demolition(ymd[4]);
+            aSpan[5].innerHTML = rec[0];
+            aSpan[6].innerHTML = rec[1];
+            rec = Demolition(ymd[5]);
+            aSpan[7].innerHTML = rec[0];
+            aSpan[8].innerHTML = rec[1];
+        };
+        nowTime();
+        //构造一个拆分函数，目的是，将时秒分的二位数拆开，并且分别带回html赋值
+        function Demolition(num) {
+            //先检测目标数据是一位数还是两位数，
+            //一位数，只更改个位数，
+            //两位数，需要更改两个数。
+            let s,g;
+            if (num >= 10) {
+                g = num % 10;//个位数字
+                s = (num - g) / 10;//十位数字
+            }
+            else {
+                g = num;
+                s = 0;
+            }
+            return [s, g];
+        }
+        //计时器
+        setInterval(nowTime, 1000);
+        //归纳表盘旋转度数的函数
+        function deg (deg,obj,time){
+            setInterval(() => {
+                obj.style.transform = `rotate(${deg}deg)`;
+            },time)
+        }
+        //设计表盘
+        (function(){
+            //秒针
+            let now = new Date(),
+                sec = now.getSeconds(),
+                secdeg = sec*6-90;
+                //初始位置
+                oSec.style.transform = `rotate(${secdeg}deg)`
+                //走起
+                setInterval((sec) => {
+                    secdeg += 6;
+                    oSec.style.transform = `rotate(${secdeg}deg)`;
+                },1000)
+            //分针
+            let min = now.getMinutes(),
+                mindeg = min*6+sec/60*6-90;
+                //算一个初始位置
+                oMin.style.transform = `rotate(${mindeg}deg)`
+                //走起
+                deg(mindeg,oMin,60000);
+            let hour = now.getHours();
+                hour = hour%12;
+            let hourdeg = hour*30+min/60*30-90;
+                oHour.style.transform = `rotate(${hourdeg}deg)`
+                deg(hourdeg,oHour,3600)
+        })()
+    }
+    </script>
+</body>
+
+</html>
